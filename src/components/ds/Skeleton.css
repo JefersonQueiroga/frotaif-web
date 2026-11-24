@@ -1,0 +1,46 @@
+.esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.esqueleto__linha {
+  display: flex;
+  gap: var(--space-3);
+  animation: esqueleto-pulso 1.4s ease-in-out infinite;
+}
+
+.esqueleto__selo {
+  width: 80px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  background: var(--gray-200);
+}
+
+.esqueleto__texto {
+  flex: 1 1 auto;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: var(--gray-100);
+}
+
+@keyframes esqueleto-pulso {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Quem pede menos movimento no sistema vê o esqueleto parado. */
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto__linha {
+    animation: none;
+  }
+}

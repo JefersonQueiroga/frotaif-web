@@ -1,0 +1,32 @@
+.tabela {
+  overflow-x: auto;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.tabela__tabela {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--text-body);
+}
+
+.tabela__tabela th {
+  padding: var(--space-3) var(--space-4);
+  background: var(--gray-50);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tabela__tabela td {
+  padding: 14px var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
