@@ -1,0 +1,23 @@
+.filtros-viagens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4);
+  padding: var(--space-4) 20px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+}
+
+.filtros-viagens__campo {
+  flex: 1 1 180px;
+  max-width: 220px;
+}
+
+.filtros-viagens__contador {
+  margin-left: auto;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}

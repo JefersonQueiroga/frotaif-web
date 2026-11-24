@@ -1,0 +1,165 @@
+.detalhe-viagem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  font-family: var(--font-sans);
+}
+
+.detalhe-viagem__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.detalhe-viagem__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.detalhe-viagem__colunas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.detalhe-viagem__dados,
+.detalhe-viagem__tempo {
+  margin: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: var(--space-6);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.detalhe-viagem__dados {
+  flex: 999 1 520px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px var(--space-6);
+}
+
+.detalhe-viagem__tempo {
+  flex: 1 1 280px;
+}
+
+@media (max-width: 480px) {
+  .detalhe-viagem__dados {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.detalhe-viagem__dado {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.detalhe-viagem__dado--largo {
+  grid-column: 1 / -1;
+}
+
+.detalhe-viagem__rotulo {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.detalhe-viagem__valor {
+  margin: 0;
+  font-size: var(--fs-base);
+  color: var(--text-strong);
+  overflow-wrap: anywhere;
+}
+
+.detalhe-viagem__mono {
+  font-family: var(--font-mono);
+}
+
+.detalhe-viagem__subtitulo {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.detalhe-viagem__etapas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detalhe-viagem__etapa {
+  position: relative;
+  display: flex;
+  gap: var(--space-3);
+  padding-bottom: 18px;
+}
+
+/* Linha vertical ligando um ponto ao próximo (a última etapa não tem). */
+.detalhe-viagem__etapa:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 20px;
+  bottom: 0;
+  width: 2px;
+  background: var(--gray-200);
+}
+
+.detalhe-viagem__etapa--feito:not(:last-child)::before {
+  background: var(--green-300);
+}
+
+.detalhe-viagem__ponto {
+  flex: none;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: var(--gray-300);
+}
+
+.detalhe-viagem__etapa--feito .detalhe-viagem__ponto {
+  background: var(--green-500);
+}
+
+.detalhe-viagem__etapa--atual .detalhe-viagem__ponto {
+  background: var(--surface-card);
+  border: 4px solid var(--green-500);
+}
+
+.detalhe-viagem__etapa--erro .detalhe-viagem__ponto {
+  background: var(--red-500);
+}
+
+.detalhe-viagem__etapa-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detalhe-viagem__etapa-rotulo {
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.detalhe-viagem__etapa--pendente .detalhe-viagem__etapa-rotulo {
+  font-weight: var(--fw-regular);
+  color: var(--text-muted);
+}
+
+.detalhe-viagem__etapa-nota {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}

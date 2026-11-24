@@ -7,6 +7,9 @@ import Componentes from './pages/Componentes.jsx'
 import EmConstrucao from './pages/EmConstrucao.jsx'
 import Login from './pages/Login.jsx'
 import NaoEncontrada from './pages/NaoEncontrada.jsx'
+import DetalheViagemServidor from './pages/servidor/DetalheViagemServidor.jsx'
+import SolicitarViagem from './pages/servidor/SolicitarViagem.jsx'
+import ViagensServidor from './pages/servidor/ViagensServidor.jsx'
 
 // "/" manda cada papel para a sua tela inicial (RotaProtegida já garante que há usuário).
 function Inicio() {
@@ -28,9 +31,9 @@ function App() {
 
         <Route element={<Shell />}>
           <Route element={<RotaProtegida papel="SERVIDOR" />}>
-            <Route path="/servidor/viagens" element={<EmConstrucao titulo="Viagens" />} />
-            <Route path="/servidor/viagens/nova" element={<EmConstrucao titulo="Solicitar viagem" />} />
-            <Route path="/servidor/viagens/:id" element={<EmConstrucao titulo="Detalhe da viagem" />} />
+            <Route path="/servidor/viagens" element={<ViagensServidor />} />
+            <Route path="/servidor/viagens/nova" element={<SolicitarViagem />} />
+            <Route path="/servidor/viagens/:id" element={<DetalheViagemServidor />} />
           </Route>
 
           <Route element={<RotaProtegida papel="MOTORISTA" />}>
