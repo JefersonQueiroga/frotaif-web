@@ -1,0 +1,15 @@
+.carga-veiculo__voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  min-height: 44px;
+  color: var(--green-700);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.carga-veiculo__voltar:hover {
+  text-decoration: underline;
+}

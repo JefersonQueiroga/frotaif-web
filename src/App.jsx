@@ -11,6 +11,10 @@ import DetalheViagemMotorista from './pages/motorista/DetalheViagemMotorista.jsx
 import ViagensMotorista from './pages/motorista/ViagensMotorista.jsx'
 import DetalheViagemGestor from './pages/gestor/DetalheViagemGestor.jsx'
 import ViagensGestor from './pages/gestor/ViagensGestor.jsx'
+import DetalheVeiculo from './pages/gestor/veiculos/DetalheVeiculo.jsx'
+import EditarVeiculo from './pages/gestor/veiculos/EditarVeiculo.jsx'
+import FormVeiculo from './pages/gestor/veiculos/FormVeiculo.jsx'
+import ListaVeiculos from './pages/gestor/veiculos/ListaVeiculos.jsx'
 import DetalheViagemServidor from './pages/servidor/DetalheViagemServidor.jsx'
 import SolicitarViagem from './pages/servidor/SolicitarViagem.jsx'
 import ViagensServidor from './pages/servidor/ViagensServidor.jsx'
@@ -49,10 +53,10 @@ function App() {
             <Route path="/gestor" element={<EmConstrucao titulo="Painel" />} />
             <Route path="/gestor/viagens" element={<ViagensGestor />} />
             <Route path="/gestor/viagens/:id" element={<DetalheViagemGestor />} />
-            <Route path="/gestor/veiculos" element={<EmConstrucao titulo="Veículos" />} />
-            <Route path="/gestor/veiculos/novo" element={<EmConstrucao titulo="Novo veículo" />} />
-            <Route path="/gestor/veiculos/:id" element={<EmConstrucao titulo="Detalhe do veículo" />} />
-            <Route path="/gestor/veiculos/:id/editar" element={<EmConstrucao titulo="Editar veículo" />} />
+            <Route path="/gestor/veiculos" element={<ListaVeiculos />} />
+            <Route path="/gestor/veiculos/novo" element={<FormVeiculo />} />
+            <Route path="/gestor/veiculos/:id" element={<DetalheVeiculo />} />
+            <Route path="/gestor/veiculos/:id/editar" element={<EditarVeiculo />} />
             <Route path="/gestor/motoristas" element={<EmConstrucao titulo="Motoristas" />} />
           </Route>
 
