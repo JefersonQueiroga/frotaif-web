@@ -14,6 +14,7 @@ import ViagensGestor from './pages/gestor/ViagensGestor.jsx'
 import DetalheVeiculo from './pages/gestor/veiculos/DetalheVeiculo.jsx'
 import EditarVeiculo from './pages/gestor/veiculos/EditarVeiculo.jsx'
 import FormVeiculo from './pages/gestor/veiculos/FormVeiculo.jsx'
+import ListaMotoristas from './pages/gestor/motoristas/ListaMotoristas.jsx'
 import ListaVeiculos from './pages/gestor/veiculos/ListaVeiculos.jsx'
 import DetalheViagemServidor from './pages/servidor/DetalheViagemServidor.jsx'
 import SolicitarViagem from './pages/servidor/SolicitarViagem.jsx'
@@ -57,7 +58,7 @@ function App() {
             <Route path="/gestor/veiculos/novo" element={<FormVeiculo />} />
             <Route path="/gestor/veiculos/:id" element={<DetalheVeiculo />} />
             <Route path="/gestor/veiculos/:id/editar" element={<EditarVeiculo />} />
-            <Route path="/gestor/motoristas" element={<EmConstrucao titulo="Motoristas" />} />
+            <Route path="/gestor/motoristas" element={<ListaMotoristas />} />
           </Route>
 
           {/* Dentro do Shell para o usuário logado não perder o menu ao errar o endereço. */}

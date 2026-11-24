@@ -1,0 +1,19 @@
+.lista-motoristas__nome {
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+
+.lista-motoristas__mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.lista-motoristas__categoria {
+  font-weight: var(--fw-bold);
+}
+
+.lista-motoristas__acoes {
+  display: flex;
+  gap: var(--space-2);
+}
