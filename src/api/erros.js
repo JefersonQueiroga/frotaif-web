@@ -15,11 +15,9 @@ export function descreverErro(erro) {
     return { tom: 'danger', titulo: 'Erro inesperado', mensagem: erro?.message || 'Algo deu errado.', podeTentarDeNovo: false }
   }
   // Problema de conexão ou do servidor: repetir pode funcionar. Erro de regra (4xx): repetir dá no mesmo.
-  if (erro.status === 0) {
+  // Rede (status 0) e 5xx têm o mesmo tratamento (spec §5.3): para o usuário, o servidor não respondeu direito.
+  if (erro.status === 0 || erro.status >= 500) {
     return { tom: 'warning', titulo: 'Não foi possível falar com o servidor', mensagem: erro.mensagem, podeTentarDeNovo: true }
-  }
-  if (erro.status >= 500) {
-    return { tom: 'danger', titulo: 'Erro no servidor', mensagem: erro.mensagem, podeTentarDeNovo: true }
   }
   return {
     tom: 'danger',
