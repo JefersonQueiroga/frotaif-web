@@ -6,11 +6,11 @@ import Pagina from '../components/layout/Pagina.jsx'
 // Rota `*`: nenhum caminho da tabela casou.
 export default function NaoEncontrada() {
   const { usuario } = useAuth()
-  const inicio = usuario ? TELA_INICIAL[usuario.papel] : '/login'
+  // A rota `*` fica dentro de RotaProtegida, então sempre há usuário logado aqui.
   return (
     <Pagina titulo="Página não encontrada" subtitulo="O endereço não existe ou foi removido.">
       <p>
-        <Link to={inicio}>{usuario ? 'Voltar para a tela inicial' : 'Ir para o login'}</Link>
+        <Link to={TELA_INICIAL[usuario.papel]}>Voltar para a tela inicial</Link>
       </p>
     </Pagina>
   )

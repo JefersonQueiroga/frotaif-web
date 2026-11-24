@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Alert, Button } from '../../components/ds/index.js'
 import Pagina from '../../components/layout/Pagina.jsx'
@@ -22,6 +22,11 @@ export default function ViagensServidor() {
   const navigate = useNavigate()
   // O formulário de solicitação manda a mensagem de sucesso pelo `state` da navegação.
   const [sucesso, setSucesso] = useState(location.state?.sucesso ?? null)
+
+  // Depois de ler a mensagem, apagamos o `state`: senão ela voltaria a aparecer ao recarregar a página (F5).
+  useEffect(() => {
+    if (location.state?.sucesso) navigate(location.pathname, { replace: true, state: null })
+  }, [location.state, location.pathname, navigate])
 
   const irParaNova = () => navigate('/servidor/viagens/nova')
 

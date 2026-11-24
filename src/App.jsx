@@ -1,9 +1,9 @@
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './auth/AuthContext.jsx'
 import RotaProtegida from './auth/RotaProtegida.jsx'
 import { TELA_INICIAL } from './auth/papeis.js'
 import Shell from './components/layout/Shell.jsx'
-import Componentes from './pages/Componentes.jsx'
 import Login from './pages/Login.jsx'
 import NaoEncontrada from './pages/NaoEncontrada.jsx'
 import DetalheViagemMotorista from './pages/motorista/DetalheViagemMotorista.jsx'
@@ -26,14 +26,27 @@ function Inicio() {
   return <Navigate to={TELA_INICIAL[usuario.papel]} replace />
 }
 
-// Tabela de rotas (spec §6). Cada tela marcada "Em construção" é trocada por outra tarefa.
+// Import dinâmico: o catálogo vira um arquivo à parte e, como o `import()` só existe quando `import.meta.env.DEV` é verdadeiro,
+// o build de produção nem o inclui (nem o CSS dele).
+const Componentes = import.meta.env.DEV ? lazy(() => import('./pages/Componentes.jsx')) : null
+
+// Tabela de rotas (spec §6): cada papel só entra nas telas do seu grupo (RotaProtegida com `papel`).
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
 
       {/* Catálogo de componentes: só existe no `npm run dev`, nunca no build de produção. */}
-      {import.meta.env.DEV && <Route path="/componentes" element={<Componentes />} />}
+      {import.meta.env.DEV && (
+        <Route
+          path="/componentes"
+          element={
+            <Suspense fallback={<p>Carregando catálogo…</p>}>
+              <Componentes />
+            </Suspense>
+          }
+        />
+      )}
 
       <Route element={<RotaProtegida />}>
         <Route path="/" element={<Inicio />} />

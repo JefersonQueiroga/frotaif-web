@@ -42,7 +42,7 @@ export default function ListaMotoristas() {
     },
     {
       titulo: 'Ações',
-      // Motorista inativo fica na lista só como histórico: sem ações.
+      // O backend só devolve motoristas ativos (inativar o tira da lista), mas `ativo` continua no contrato.
       render: (m) =>
         m.ativo ? (
           <div className="lista-motoristas__acoes">

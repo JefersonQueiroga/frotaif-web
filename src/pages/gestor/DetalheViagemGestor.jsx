@@ -10,6 +10,7 @@ import CargaRecurso, { LinkVoltar } from '../../components/CargaRecurso.jsx'
 import { recursoIndisponivel } from '../../components/recursoIndisponivel.js'
 import useCarregar from '../../hooks/useCarregar.js'
 import ModalAprovar from './ModalAprovar.jsx'
+import './DetalheViagemGestor.css'
 
 const VOLTAR = <LinkVoltar para="/gestor/viagens">Voltar para as viagens</LinkVoltar>
 
@@ -69,7 +70,11 @@ export default function DetalheViagemGestor() {
           Cancelar viagem
         </Button>
       )}
-      {emCampo && <span>Só o motorista alocado pode concluir.</span>}
+      {emCampo && (
+        <span className="detalhe-gestor__ajuda">
+          {viagem.status === 'APROVADA' ? 'Só o motorista alocado pode iniciar e concluir.' : 'Só o motorista alocado pode concluir.'}
+        </span>
+      )}
     </>
   )
 
