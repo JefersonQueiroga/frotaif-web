@@ -1,4 +1,4 @@
-.carga-veiculo__voltar {
+.carga-recurso__voltar {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -10,6 +10,6 @@
   text-decoration: none;
 }
 
-.carga-veiculo__voltar:hover {
+.carga-recurso__voltar:hover {
   text-decoration: underline;
 }

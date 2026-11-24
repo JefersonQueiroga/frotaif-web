@@ -6,12 +6,12 @@ import { Alert, Button } from '../../components/ds/index.js'
 import Pagina from '../../components/layout/Pagina.jsx'
 import ModalMotivo from '../../components/ModalMotivo.jsx'
 import DetalheViagem from '../../components/viagens/DetalheViagem.jsx'
-import CargaViagem, { LinkVoltar } from '../../components/viagens/CargaViagem.jsx'
-import { viagemIndisponivel } from '../../components/viagens/viagemIndisponivel.js'
+import CargaRecurso, { LinkVoltar } from '../../components/CargaRecurso.jsx'
+import { recursoIndisponivel } from '../../components/recursoIndisponivel.js'
 import useCarregar from '../../hooks/useCarregar.js'
 import ModalAprovar from './ModalAprovar.jsx'
 
-const VOLTAR = <LinkVoltar para="/gestor/viagens" />
+const VOLTAR = <LinkVoltar para="/gestor/viagens">Voltar para as viagens</LinkVoltar>
 
 export default function DetalheViagemGestor() {
   const { id } = useParams()
@@ -38,8 +38,18 @@ export default function DetalheViagemGestor() {
     concluir('Viagem cancelada.')
   }
 
-  if (viagemIndisponivel(viagem, erro)) {
-    return <CargaViagem erro={erro} carregando={carregando} recarregar={recarregar} voltarPara="/gestor/viagens" />
+  if (recursoIndisponivel(viagem, erro)) {
+    return (
+      <CargaRecurso
+        erro={erro}
+        carregando={carregando}
+        recarregar={recarregar}
+        titulo="Detalhe da viagem"
+        naoEncontrado="Viagem não encontrada"
+        voltarPara="/gestor/viagens"
+        textoVoltar="Voltar para as viagens"
+      />
+    )
   }
 
   const solicitada = viagem.status === 'SOLICITADA'

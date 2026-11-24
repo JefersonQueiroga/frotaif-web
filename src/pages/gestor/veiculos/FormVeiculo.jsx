@@ -63,6 +63,7 @@ export default function FormVeiculo({ veiculo }) {
 
   // Digitar num campo atualiza o valor e apaga só o erro desse campo.
   const definir = (campo, valor) => {
+    setErroApi(null) // o erro da API também some assim que a pessoa corrige algo
     setForm((atual) => ({ ...atual, [campo]: valor }))
     setErros((atuais) => {
       if (!atuais[campo]) return atuais

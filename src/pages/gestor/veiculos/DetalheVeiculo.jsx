@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { buscarVeiculo, inativarVeiculo, reativarVeiculo } from '../../../api/veiculos.js'
+import CargaRecurso, { LinkVoltar } from '../../../components/CargaRecurso.jsx'
+import { recursoIndisponivel } from '../../../components/recursoIndisponivel.js'
 import AlertaErro from '../../../components/AlertaErro.jsx'
 import { Alert, Button, Tabs } from '../../../components/ds/index.js'
 import Pagina from '../../../components/layout/Pagina.jsx'
@@ -11,8 +13,6 @@ import { formatarKm, formatarNumero } from '../../../utils/formatar.js'
 import { rotuloTipoVeiculo } from '../../../utils/status.js'
 import AbaAbastecimentos from './AbaAbastecimentos.jsx'
 import AbaManutencoes from './AbaManutencoes.jsx'
-import CargaVeiculo, { LinkVoltarVeiculos } from './CargaVeiculo.jsx'
-import { veiculoIndisponivel } from './veiculoIndisponivel.js'
 import './DetalheVeiculo.css'
 
 const ABAS = [
@@ -74,15 +74,25 @@ export default function DetalheVeiculo() {
     }
   }
 
-  if (veiculoIndisponivel(veiculo, erro)) {
-    return <CargaVeiculo erro={erro} carregando={carregando} recarregar={recarregar} titulo="Detalhe do veículo" />
+  if (recursoIndisponivel(veiculo, erro)) {
+    return (
+      <CargaRecurso
+        erro={erro}
+        carregando={carregando}
+        recarregar={recarregar}
+        titulo="Detalhe do veículo"
+        naoEncontrado="Veículo não encontrado"
+        voltarPara="/gestor/veiculos"
+        textoVoltar="Voltar para os veículos"
+      />
+    )
   }
 
   const inativo = veiculo.status === 'INATIVO'
 
   return (
     <Pagina titulo={`${veiculo.marca} ${veiculo.modelo}`}>
-      <LinkVoltarVeiculos />
+      <LinkVoltar para="/gestor/veiculos">Voltar para os veículos</LinkVoltar>
       {sucesso && (
         <Alert tone="success" onClose={() => setSucesso(null)}>
           {sucesso}

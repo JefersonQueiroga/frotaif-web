@@ -31,6 +31,7 @@ export default function SolicitarViagem() {
   // Digitar num campo atualiza o valor e apaga só o erro desse campo.
   const alterar = (campo) => (evento) => {
     const valor = evento.target.value
+    setErroApi(null) // o erro da API também some assim que a pessoa corrige algo
     setForm((atual) => ({ ...atual, [campo]: valor }))
     setErros((atuais) => {
       if (!atuais[campo]) return atuais
