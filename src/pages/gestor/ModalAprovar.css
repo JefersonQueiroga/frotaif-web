@@ -1,0 +1,11 @@
+.modal-aprovar__resumo {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.modal-aprovar__nota {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
