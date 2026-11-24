@@ -25,4 +25,8 @@ describe('descreverErro', () => {
   test('erro comum vira inesperado', () => {
     expect(descreverErro(new Error('boom'))).toEqual({ tom: 'danger', titulo: 'Erro inesperado', mensagem: 'boom', podeTentarDeNovo: false })
   })
+  test('datas da API na mensagem aparecem no formato brasileiro', () => {
+    expect(descreverErro(new ApiError(422, 'A CNH de Elias vence em 2026-12-14, antes do fim da viagem')).mensagem)
+      .toBe('A CNH de Elias vence em 14/12/2026, antes do fim da viagem')
+  })
 })

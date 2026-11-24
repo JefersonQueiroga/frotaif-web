@@ -20,6 +20,13 @@ export function formatarData(iso) {
   return `${dia}/${mes}/${ano}`
 }
 
+// As mensagens de erro do backend trazem datas no formato da API ("vence em 2026-12-14").
+// Trocamos cada data AAAA-MM-DD do texto por DD/MM/AAAA antes de mostrar ao usuário.
+export function formatarDatasNoTexto(texto) {
+  if (!texto) return texto
+  return texto.replace(/(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)/g, '$3/$2/$1')
+}
+
 // Aceita '2026-11-28T07:05:00' e '2026-11-28T07:05' (o backend pode mandar sem segundos).
 export function formatarDataHora(iso) {
   if (!iso) return VAZIO

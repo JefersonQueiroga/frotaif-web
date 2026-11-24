@@ -42,6 +42,11 @@ export const rotuloTipoVeiculo = (tipo) => TIPO_VEICULO[tipo] ?? tipo
 export const cnhVencida = (motorista, hoje) =>
   motorista.ativo && diasEntre(hoje, motorista.validadeCnh) < 0
 
+// Mesma regra do backend (ViagemService.validarCnh): a CNH precisa valer até o dia do retorno da viagem.
+// Comparar as strings AAAA-MM-DD funciona porque a ordem alfabética é a ordem das datas.
+export const cnhValeParaViagem = (motorista, viagem) =>
+  motorista.validadeCnh >= viagem.retornoPrevisto.slice(0, 10)
+
 // "Vence em N dias" só aparece nos próximos 30 dias; antes disso a CNH está "em dia".
 const DIAS_AVISO_CNH = 30
 

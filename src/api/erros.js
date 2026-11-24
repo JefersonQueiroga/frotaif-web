@@ -1,6 +1,7 @@
 // Transforma um erro qualquer no que a tela precisa para montar um Alert:
 // tom (cor), título, mensagem e se vale oferecer "Tentar de novo".
 import { ApiError } from './cliente'
+import { formatarDatasNoTexto } from '../utils/formatar'
 
 const TITULOS = {
   400: 'Dados inválidos',
@@ -22,7 +23,8 @@ export function descreverErro(erro) {
   return {
     tom: 'danger',
     titulo: TITULOS[erro.status] || `Erro (${erro.status})`,
-    mensagem: erro.mensagem,
+    // As regras de negócio citam datas no formato da API; mostramos no formato brasileiro.
+    mensagem: formatarDatasNoTexto(erro.mensagem),
     podeTentarDeNovo: false,
   }
 }

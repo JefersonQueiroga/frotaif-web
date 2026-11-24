@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import {
   formatarData, formatarDataHora, formatarNumero, formatarMoeda, formatarKm,
-  formatarLitros, formatarCpf, mascararCpf, hojeISO, diasEntre, lerDecimal,
+  formatarLitros, formatarCpf, mascararCpf, hojeISO, diasEntre, lerDecimal, formatarDatasNoTexto,
 } from './formatar'
 
 describe('datas', () => {
@@ -60,5 +60,18 @@ describe('mascararCpf', () => {
   test('apagar pontuação no fim não deixa sobras', () => {
     expect(mascararCpf('390.')).toBe('390')
     expect(mascararCpf('390.533.447-')).toBe('390.533.447')
+  })
+})
+
+describe('formatarDatasNoTexto', () => {
+  test('troca datas da API (AAAA-MM-DD) por DD/MM/AAAA dentro de uma frase', () => {
+    expect(formatarDatasNoTexto('A CNH de Fábio vence em 2026-12-14, antes do fim da viagem'))
+      .toBe('A CNH de Fábio vence em 14/12/2026, antes do fim da viagem')
+    expect(formatarDatasNoTexto('de 2026-11-25 até 2026-11-27')).toBe('de 25/11/2026 até 27/11/2026')
+  })
+  test('deixa o resto do texto como está', () => {
+    expect(formatarDatasNoTexto('Já existe veículo com a placa RNX1A23')).toBe('Já existe veículo com a placa RNX1A23')
+    expect(formatarDatasNoTexto('')).toBe('')
+    expect(formatarDatasNoTexto(undefined)).toBe(undefined)
   })
 })

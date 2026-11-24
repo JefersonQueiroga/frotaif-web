@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react'
 import './Input.css'
 import './Select.css'
 
-// Select nativo estilizado. `options` aceita [{ value, label }] ou lista de textos.
+// Select nativo estilizado. `options` aceita [{ value, label, disabled? }] ou lista de textos.
 // `placeholder` vira a primeira opção, com value=''.
 export default function Select({
   id,
@@ -45,8 +45,10 @@ export default function Select({
           {options.map((opcao) => {
             const valor = typeof opcao === 'string' ? opcao : opcao.value
             const texto = typeof opcao === 'string' ? opcao : opcao.label
+            // Uma opção pode vir com disabled: true — aparece na lista, mas não pode ser escolhida.
+            const desabilitada = typeof opcao === 'string' ? false : Boolean(opcao.disabled)
             return (
-              <option key={valor} value={valor}>
+              <option key={valor} value={valor} disabled={desabilitada}>
                 {texto}
               </option>
             )

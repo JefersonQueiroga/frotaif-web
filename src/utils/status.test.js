@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import {
   infoStatusViagem, infoStatusVeiculo, infoTipoManutencao,
-  rotuloTipoVeiculo, situacaoMotorista, cnhVencida, rotuloVencimentoCnh,
+  rotuloTipoVeiculo, situacaoMotorista, cnhVencida, rotuloVencimentoCnh, cnhValeParaViagem,
 } from './status'
 
 describe('rótulos e tons', () => {
@@ -41,5 +41,15 @@ describe('rotuloVencimentoCnh', () => {
     expect(rotuloVencimentoCnh('2026-11-24', hoje)).toEqual({ rotulo: 'Vence em 1 dia', tom: 'amber' })
     expect(rotuloVencimentoCnh('2026-12-13', hoje)).toEqual({ rotulo: 'Vence em 20 dias', tom: 'amber' })
     expect(rotuloVencimentoCnh('2027-01-22', hoje)).toEqual({ rotulo: 'Vence em 60 dias', tom: 'amber' })
+  })
+})
+
+describe('cnhValeParaViagem', () => {
+  const viagem = { saida: '2026-12-10T07:00:00', retornoPrevisto: '2026-12-11T18:00:00' }
+  test('a CNH precisa valer até o dia do retorno (mesma regra do backend)', () => {
+    expect(cnhValeParaViagem({ validadeCnh: '2027-01-01' }, viagem)).toBe(true)
+    expect(cnhValeParaViagem({ validadeCnh: '2026-12-11' }, viagem)).toBe(true)
+    expect(cnhValeParaViagem({ validadeCnh: '2026-12-10' }, viagem)).toBe(false)
+    expect(cnhValeParaViagem({ validadeCnh: '2026-10-24' }, viagem)).toBe(false)
   })
 })

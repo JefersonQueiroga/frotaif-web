@@ -7,6 +7,7 @@ import useCarregar from '../../hooks/useCarregar.js'
 import useEnvio from '../../components/useEnvio.js'
 import { aprovarViagem } from '../../api/viagens.js'
 import { formatarData, formatarDataHora } from '../../utils/formatar.js'
+import { cnhValeParaViagem } from '../../utils/status.js'
 import veiculosCompativeis from './veiculosCompativeis.js'
 import './ModalAprovar.css'
 
@@ -28,10 +29,16 @@ function ConteudoAprovar({ viagem, dados, erroCarga, carregando, recarregar, vei
     value: String(v.id),
     label: `${v.placa} · ${v.modelo} · ${v.capacidadePassageiros} lugares`,
   }))
-  const opcoesMotorista = ativos.map((m) => ({
-    value: String(m.id),
-    label: `${m.nome} · CNH ${m.categoriaCnh} · validade ${formatarData(m.validadeCnh)}`,
-  }))
+  // Motorista cuja CNH não vale até o retorno continua na lista (o gestor entende por que não pode
+  // escolhê-lo), mas desabilitado: a API recusaria de qualquer jeito (422).
+  const opcoesMotorista = ativos.map((m) => {
+    const valida = cnhValeParaViagem(m, viagem)
+    return {
+      value: String(m.id),
+      label: `${m.nome} · CNH ${m.categoriaCnh} · validade ${formatarData(m.validadeCnh)}${valida ? '' : ' · CNH vencida para esta viagem'}`,
+      disabled: !valida,
+    }
+  })
 
   return (
     <>
@@ -62,7 +69,8 @@ function ConteudoAprovar({ viagem, dados, erroCarga, carregando, recarregar, vei
         error={erroCampos.motorista}
       />
       <p className="modal-aprovar__nota">
-        Conflito de horário e validade ou categoria da CNH são conferidos pela API ao confirmar.
+        Motoristas com CNH vencida para esta viagem aparecem desabilitados. Conflito de horário e categoria
+        da CNH são conferidos pela API ao confirmar.
       </p>
     </>
   )
