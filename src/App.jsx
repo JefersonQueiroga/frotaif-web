@@ -4,13 +4,13 @@ import RotaProtegida from './auth/RotaProtegida.jsx'
 import { TELA_INICIAL } from './auth/papeis.js'
 import Shell from './components/layout/Shell.jsx'
 import Componentes from './pages/Componentes.jsx'
-import EmConstrucao from './pages/EmConstrucao.jsx'
 import Login from './pages/Login.jsx'
 import NaoEncontrada from './pages/NaoEncontrada.jsx'
 import DetalheViagemMotorista from './pages/motorista/DetalheViagemMotorista.jsx'
 import ViagensMotorista from './pages/motorista/ViagensMotorista.jsx'
 import DetalheViagemGestor from './pages/gestor/DetalheViagemGestor.jsx'
 import ViagensGestor from './pages/gestor/ViagensGestor.jsx'
+import Painel from './pages/gestor/Painel.jsx'
 import DetalheVeiculo from './pages/gestor/veiculos/DetalheVeiculo.jsx'
 import EditarVeiculo from './pages/gestor/veiculos/EditarVeiculo.jsx'
 import FormVeiculo from './pages/gestor/veiculos/FormVeiculo.jsx'
@@ -51,7 +51,7 @@ function App() {
           </Route>
 
           <Route element={<RotaProtegida papel="GESTOR" />}>
-            <Route path="/gestor" element={<EmConstrucao titulo="Painel" />} />
+            <Route path="/gestor" element={<Painel />} />
             <Route path="/gestor/viagens" element={<ViagensGestor />} />
             <Route path="/gestor/viagens/:id" element={<DetalheViagemGestor />} />
             <Route path="/gestor/veiculos" element={<ListaVeiculos />} />

@@ -1,0 +1,232 @@
+.painel__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.painel__kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-5);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--gray-500);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+}
+
+.painel__kpi--amber { border-top-color: var(--amber-500); }
+.painel__kpi--blue { border-top-color: var(--blue-500); }
+.painel__kpi--green { border-top-color: var(--green-500); }
+.painel__kpi--red { border-top-color: var(--red-500); }
+
+.painel__kpi-titulo {
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}
+
+.painel__kpi-valor {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.painel__kpi-de {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}
+
+.painel__kpi-nota {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.painel__secao {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  margin-bottom: var(--space-6);
+  font-family: var(--font-sans);
+}
+
+.painel__secao h2 {
+  margin: 0;
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.painel__secao > a,
+.painel__titulo-secao a {
+  color: var(--green-700);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.painel__titulo-secao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.painel__janela {
+  width: 150px;
+}
+
+.painel__subtitulo {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.painel__duas-colunas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.painel__duas-colunas > .painel__secao {
+  flex: 1 1 420px;
+}
+
+.painel__id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.painel__data {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.painel__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.painel__analisar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--green-700);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.painel__analisar:hover {
+  background: var(--tint-hover);
+}
+
+.painel__card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-4);
+}
+
+.painel__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.painel__motorista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.painel__motorista:last-child {
+  border-bottom: 0;
+}
+
+.painel__motorista-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.painel__motorista-nome {
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+
+.painel__motorista-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.painel__vazio {
+  margin: 0;
+  padding: var(--space-4) 2px;
+  color: var(--text-muted);
+}
+
+.painel__veiculos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.painel__veiculo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 44px;
+  padding: var(--space-4);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-body);
+  text-decoration: none;
+}
+
+.painel__veiculo:hover {
+  background: var(--tint-hover);
+}
+
+.painel__veiculo-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.painel__veiculo-qtd {
+  font-size: var(--fs-h4);
+  color: var(--text-strong);
+}
+
+.painel__veiculo-item {
+  font-size: var(--fs-sm);
+  color: var(--text-body);
+}
+
+.painel__veiculo-mais {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.painel__placa {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
