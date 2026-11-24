@@ -1,0 +1,138 @@
+.shell {
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background: var(--surface-page);
+}
+
+.shell__cabecalho {
+  background: var(--white);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.shell__topo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.shell__logo {
+  height: 40px;
+}
+
+.shell__divisor {
+  width: 1px;
+  height: 32px;
+  background: var(--border-default);
+}
+
+.shell__marca {
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__nome-app {
+  font-size: var(--fs-lg);
+  color: var(--text-strong);
+}
+
+.shell__campus {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.shell__espaco {
+  flex: 1 1 auto;
+}
+
+.shell__usuario {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.shell__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: var(--fw-extrabold);
+  color: var(--white);
+  background: var(--green-600);
+}
+
+.shell__identidade {
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__nome-usuario {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+
+.shell__papel {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--green-700);
+}
+
+.shell__menu {
+  background: var(--green-500);
+}
+
+.shell__menu-itens {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Alvo de toque de pelo menos 44px de altura. */
+.shell__item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.shell__item:hover {
+  background: var(--green-600);
+}
+
+.shell__item--ativo,
+.shell__item--ativo:hover {
+  background: var(--green-700);
+  font-weight: var(--fw-extrabold);
+}
+
+.shell__conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-16);
+}
+
+@media (max-width: 600px) {
+  .shell__topo {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .shell__conteudo {
+    padding: var(--space-6) var(--space-4) var(--space-12);
+  }
+}

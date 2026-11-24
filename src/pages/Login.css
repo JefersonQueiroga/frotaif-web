@@ -1,0 +1,110 @@
+.login {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background: var(--surface-page);
+}
+
+.login__painel {
+  flex: 1 1 420px;
+  min-width: 0;
+  background: var(--gradient-brand);
+  color: var(--white);
+  padding: var(--space-16) 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login__apresentacao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 520px;
+}
+
+.login__campus {
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green-100);
+}
+
+.login__marca {
+  margin: 0;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.login__texto {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.login__lado-form {
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+}
+
+.login__caixa {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.login__logo {
+  height: 48px;
+  align-self: flex-start;
+}
+
+.login__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login__titulo {
+  margin: 0;
+  font-size: 28px;
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.login__subtitulo {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .login__painel {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .login__marca {
+    font-size: var(--fs-h1);
+  }
+
+  .login__lado-form {
+    padding: var(--space-8) var(--space-4);
+  }
+}
