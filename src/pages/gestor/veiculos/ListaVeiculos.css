@@ -33,11 +33,6 @@
   color: var(--text-muted);
 }
 
-.lista-veiculos__numero {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 .lista-veiculos__abrir {
   display: inline-flex;
   align-items: center;

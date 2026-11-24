@@ -28,12 +28,6 @@
   border-radius: var(--radius-lg);
 }
 
-/* Números alinhados à direita e com algarismos de largura fixa, para a coluna ficar legível. */
-.aba-veiculo__numero {
-  text-align: right !important;
-  font-variant-numeric: tabular-nums;
-}
-
 .aba-veiculo__data {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;

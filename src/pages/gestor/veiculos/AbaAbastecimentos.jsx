@@ -21,9 +21,9 @@ const ID_CAMPO = {
 const COLUNAS = [
   { titulo: 'Data', className: 'aba-veiculo__data', render: (a) => formatarData(a.data) },
   { titulo: 'Posto', render: (a) => a.posto || '—' },
-  { titulo: 'Litros', className: 'aba-veiculo__numero', render: (a) => formatarLitros(a.litros) },
-  { titulo: 'Valor', className: 'aba-veiculo__numero', render: (a) => formatarMoeda(a.valorTotal) },
-  { titulo: 'Km', className: 'aba-veiculo__numero', render: (a) => formatarKm(a.kmNoAbastecimento) },
+  { titulo: 'Litros', className: 'tabela__numero', render: (a) => formatarLitros(a.litros) },
+  { titulo: 'Valor', className: 'tabela__numero', render: (a) => formatarMoeda(a.valorTotal) },
+  { titulo: 'Km', className: 'tabela__numero', render: (a) => formatarKm(a.kmNoAbastecimento) },
 ]
 
 // Os mais recentes primeiro (mesma data: o registrado por último).

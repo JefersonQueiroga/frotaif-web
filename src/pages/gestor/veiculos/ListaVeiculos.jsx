@@ -34,8 +34,8 @@ const COLUNAS = [
     ),
   },
   { titulo: 'Tipo', render: (v) => rotuloTipoVeiculo(v.tipo) },
-  { titulo: 'Lugares', className: 'lista-veiculos__numero', render: (v) => formatarNumero(v.capacidadePassageiros) },
-  { titulo: 'Km atual', className: 'lista-veiculos__numero', render: (v) => formatarKm(v.quilometragemAtual) },
+  { titulo: 'Lugares', className: 'tabela__numero', render: (v) => formatarNumero(v.capacidadePassageiros) },
+  { titulo: 'Km atual', className: 'tabela__numero', render: (v) => formatarKm(v.quilometragemAtual) },
   { titulo: 'Status', render: (v) => <StatusBadge tipo="veiculo" valor={v.status} /> },
   {
     titulo: 'Ações',

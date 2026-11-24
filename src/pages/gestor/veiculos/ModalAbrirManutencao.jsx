@@ -142,7 +142,7 @@ export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFech
           Ao abrir, o sistema cancela automaticamente as viagens aprovadas deste veículo que coincidirem com a
           manutenção.
           <div>
-            <Button variant="secondary" size="sm" onClick={() => setTentativa((n) => n + 1)}>
+            <Button variant="secondary" onClick={() => setTentativa((n) => n + 1)}>
               Tentar de novo
             </Button>
           </div>

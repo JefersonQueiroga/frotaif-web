@@ -13,7 +13,7 @@ export default function AlertaErro({ erro, onTentarDeNovo }) {
       {mensagem}
       {podeTentarDeNovo && onTentarDeNovo && (
         <div className="alerta-erro__acao">
-          <Button variant="secondary" size="sm" onClick={onTentarDeNovo}>
+          <Button variant="secondary" onClick={onTentarDeNovo}>
             Tentar de novo
           </Button>
         </div>

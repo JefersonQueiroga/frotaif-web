@@ -30,3 +30,10 @@
   border-top: 1px solid var(--border-subtle);
   vertical-align: middle;
 }
+
+/* Colunas numéricas (th e td): à direita e com algarismos de largura fixa. Vem depois de
+   `.tabela__tabela th` e tem a mesma especificidade, então vence o `text-align: left` dele. */
+.tabela__tabela .tabela__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

@@ -15,7 +15,7 @@ export const COLUNAS_VIAGEM = {
     className: 'lista-viagens__data',
     render: (v) => formatarDataHora(v.retornoPrevisto),
   },
-  passageiros: { titulo: 'Pass.', className: 'lista-viagens__numero', render: (v) => v.qtdPassageiros },
+  passageiros: { titulo: 'Pass.', className: 'tabela__numero', render: (v) => v.qtdPassageiros },
   veiculo: {
     titulo: 'Veículo',
     render: (v) => (v.veiculo ? <span className="lista-viagens__placa">{v.veiculo.placa}</span> : '—'),

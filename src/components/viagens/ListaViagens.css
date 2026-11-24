@@ -9,11 +9,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.lista-viagens__numero {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 .lista-viagens__placa {
   font-family: var(--font-mono);
   font-size: 13px;

@@ -15,7 +15,7 @@ const ordenar = (a, b) => Number(b.aberta) - Number(a.aberta) || b.dataInicio.lo
 // A API não informa quantas viagens cancelou: `canceladas` é a contagem da prévia, ou null se a prévia falhou.
 function mensagemAberta(placa, canceladas) {
   const base = `Manutenção aberta. ${placa} está Em manutenção`
-  if (canceladas === null) return `${base}. Viagens aprovadas do veículo no período foram canceladas automaticamente.`
+  if (canceladas === null) return `${base}. As viagens aprovadas do veículo que coincidiam com o período, se havia alguma, foram canceladas automaticamente.`
   if (canceladas === 0) return `${base}.`
   return `${base} e ${canceladas} ${canceladas === 1 ? 'viagem foi cancelada' : 'viagens foram canceladas'}.`
 }
@@ -41,13 +41,13 @@ export default function AbaManutencoes({ veiculo, onVeiculoAlterado }) {
     { titulo: 'Início', className: 'aba-veiculo__data', render: (m) => formatarData(m.dataInicio) },
     { titulo: 'Previsão', className: 'aba-veiculo__data', render: (m) => formatarData(m.dataPrevistaFim) },
     { titulo: 'Fim', className: 'aba-veiculo__data', render: (m) => formatarData(m.dataFim) },
-    { titulo: 'Custo', className: 'aba-veiculo__numero', render: (m) => (m.custo != null ? formatarMoeda(m.custo) : '—') },
+    { titulo: 'Custo', className: 'tabela__numero', render: (m) => (m.custo != null ? formatarMoeda(m.custo) : '—') },
     {
       titulo: 'Ações',
-      className: 'aba-veiculo__numero',
+      className: 'tabela__numero',
       render: (m) =>
         m.aberta && (
-          <Button size="sm" onClick={() => setEncerrando(m)} aria-label={`Encerrar manutenção iniciada em ${formatarData(m.dataInicio)}`}>
+          <Button onClick={() => setEncerrando(m)} aria-label={`Encerrar manutenção iniciada em ${formatarData(m.dataInicio)}`}>
             Encerrar
           </Button>
         ),
