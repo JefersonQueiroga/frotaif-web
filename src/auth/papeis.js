@@ -33,6 +33,10 @@ export function destinoSeguro(caminho) {
   if (typeof caminho !== 'string') return null
   // Tem que começar com uma única "/" (nem "//" nem "/\", que alguns navegadores tratam como "//").
   if (!caminho.startsWith('/') || caminho.startsWith('//') || caminho.startsWith('/\\')) return null
+  // O navegador ignora tab e quebra de linha ao interpretar uma URL: "/<TAB>/evil.com" viraria "//evil.com".
+  // Por isso recusamos qualquer caractere de controle.
+  // oxlint-disable-next-line no-control-regex -- é exatamente isso que queremos casar
+  if (/[\u0000-\u001F\u007F]/.test(caminho)) return null
   // Voltar para o login depois de entrar formaria um laço.
   if (caminho === '/login' || caminho.startsWith('/login?') || caminho.startsWith('/login/')) return null
   return caminho

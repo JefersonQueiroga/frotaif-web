@@ -14,6 +14,12 @@ describe('destinoSeguro', () => {
     expect(destinoSeguro('javascript:alert(1)')).toBeNull()
   })
 
+  it('recusa caminhos com caracteres de controle (tab e quebra de linha)', () => {
+    // O navegador ignora tab e quebra de linha ao interpretar uma URL: "/\t/evil.com" vira "//evil.com".
+    expect(destinoSeguro('/\t/evil.com')).toBeNull()
+    expect(destinoSeguro('/\n/evil.com')).toBeNull()
+  })
+
   it('recusa a própria tela de login (evita laço) e valores vazios', () => {
     expect(destinoSeguro('/login')).toBeNull()
     expect(destinoSeguro('/login?expirou=1')).toBeNull()
