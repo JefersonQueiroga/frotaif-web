@@ -10,7 +10,7 @@ import StatusBadge from '../../components/StatusBadge.jsx'
 import Vazio from '../../components/Vazio.jsx'
 import useCarregar from '../../hooks/useCarregar.js'
 import { diasEntre, formatarData, formatarDataHora, hojeISO } from '../../utils/formatar.js'
-import { cnhVencida, infoStatusVeiculo, situacaoMotorista } from '../../utils/status.js'
+import { cnhVencida, situacaoMotorista } from '../../utils/status.js'
 import './Painel.css'
 
 const OPCOES_DIAS = [15, 30, 60, 90].map((n) => ({ value: String(n), label: `${n} dias` }))
@@ -184,34 +184,33 @@ export default function Painel() {
 
         <section className="painel__secao">
           <h2>Veículos por status</h2>
-          <div className="painel__veiculos">
-            {STATUS_VEICULO.map((status) => {
-              const estado = status === 'INATIVO' ? inativos : veiculos
-              const lista = status === 'INATIVO' ? (inativos.dados ?? []) : ativos.filter((v) => v.status === status)
-              const outros = lista.length - MAX_VEICULOS_NO_CARTAO
-              return (
-                <Link
-                  key={status}
-                  className="painel__veiculo"
-                  to={`/gestor/veiculos?status=${status}`}
-                  aria-label={`Ver veículos: ${infoStatusVeiculo(status).rotulo}`}
-                >
-                  <div className="painel__veiculo-topo">
-                    <StatusBadge tipo="veiculo" valor={status} />
-                    {estado.dados && <strong className="painel__veiculo-qtd">{lista.length}</strong>}
-                  </div>
-                  <Bloco estados={[estado]} linhas={1}>
+          {/* Carregando/erro fica fora dos links: um botão "Tentar de novo" dentro de <a> é HTML inválido. */}
+          <Bloco estados={[veiculos, inativos]} linhas={3}>
+            <div className="painel__veiculos">
+              {STATUS_VEICULO.map((status) => {
+                const lista = status === 'INATIVO' ? (inativos.dados ?? []) : ativos.filter((v) => v.status === status)
+                const outros = lista.length - MAX_VEICULOS_NO_CARTAO
+                return (
+                  <Link key={status} className="painel__veiculo" to={`/gestor/veiculos?status=${status}`}>
+                    <div className="painel__veiculo-topo">
+                      <StatusBadge tipo="veiculo" valor={status} />
+                      <strong className="painel__veiculo-qtd">{lista.length}</strong>
+                    </div>
                     {lista.slice(0, MAX_VEICULOS_NO_CARTAO).map((v) => (
                       <span key={v.id} className="painel__veiculo-item">
                         {v.marca} {v.modelo} <span className="painel__placa">{v.placa}</span>
                       </span>
                     ))}
-                    {outros > 0 && <span className="painel__veiculo-mais">+ {outros} {outros === 1 ? 'outro' : 'outros'}</span>}
-                  </Bloco>
-                </Link>
-              )
-            })}
-          </div>
+                    {outros > 0 && (
+                      <span className="painel__veiculo-mais">
+                        + {outros} {outros === 1 ? 'outro' : 'outros'}
+                      </span>
+                    )}
+                  </Link>
+                )
+              })}
+            </div>
+          </Bloco>
         </section>
       </div>
     </Pagina>
