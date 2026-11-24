@@ -1,0 +1,47 @@
+/* Estilos globais: reset mínimo, tipografia base e acessibilidade. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background: var(--surface-page);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Anel de foco visível para quem navega pelo teclado. */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+}
+
+/* Esconde o texto da tela, mas mantém para leitores de tela. */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Respeita quem pediu menos movimento no sistema operacional. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
