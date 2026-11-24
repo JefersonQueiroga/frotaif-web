@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { listarAbastecimentos, registrarAbastecimento } from '../../../api/abastecimentos.js'
 import AlertaErro from '../../../components/AlertaErro.jsx'
 import { Alert, Button, Input, Skeleton, Tabela } from '../../../components/ds/index.js'
+import useCamposFormulario, { focarPrimeiroErro } from '../../../hooks/useCamposFormulario.js'
 import useCarregar from '../../../hooks/useCarregar.js'
 import { formatarData, formatarKm, formatarLitros, formatarMoeda, hojeISO, lerDecimal } from '../../../utils/formatar.js'
 import validarAbastecimento from './validarAbastecimento.js'
@@ -9,8 +10,7 @@ import './AbasVeiculo.css'
 
 const FORM_VAZIO = { data: '', litros: '', valorTotal: '', kmNoAbastecimento: '', posto: '' }
 
-// Ordem dos campos na tela: o foco vai para o primeiro com erro nessa ordem.
-const ORDEM_CAMPOS = ['data', 'litros', 'valorTotal', 'kmNoAbastecimento']
+// Ids na ordem dos campos na tela: o foco vai para o primeiro com erro nessa ordem.
 const ID_CAMPO = {
   data: 'abast-data',
   litros: 'abast-litros',
@@ -31,25 +31,12 @@ const maisRecentesPrimeiro = (a, b) => b.data.localeCompare(a.data) || b.id - a.
 
 export default function AbaAbastecimentos({ veiculo, onVeiculoAlterado }) {
   const { dados, carregando, erro, recarregar } = useCarregar(() => listarAbastecimentos(veiculo.id), [veiculo.id])
-  const [form, setForm] = useState(FORM_VAZIO)
-  const [erros, setErros] = useState({})
   const [erroApi, setErroApi] = useState(null)
+  const { form, erros, setErros, alterar, reiniciar } = useCamposFormulario(FORM_VAZIO, () => setErroApi(null))
   const [sucesso, setSucesso] = useState(null)
   const [enviando, setEnviando] = useState(false)
   // O ref bloqueia o segundo clique mesmo antes de o React redesenhar o botão como desabilitado.
   const emAndamento = useRef(false)
-
-  // Digitar atualiza o valor e apaga só o erro desse campo (e o erro da API).
-  const alterar = (campo) => (evento) => {
-    const valor = evento.target.value
-    setErroApi(null)
-    setForm((atual) => ({ ...atual, [campo]: valor }))
-    setErros((atuais) => {
-      if (!atuais[campo]) return atuais
-      const { [campo]: _removido, ...resto } = atuais
-      return resto
-    })
-  }
 
   async function enviar(evento) {
     evento?.preventDefault() // "Tentar de novo" chama sem evento
@@ -59,11 +46,7 @@ export default function AbaAbastecimentos({ veiculo, onVeiculoAlterado }) {
     setErros(novosErros)
     setErroApi(null)
     setSucesso(null)
-    const primeiroComErro = ORDEM_CAMPOS.find((campo) => novosErros[campo])
-    if (primeiroComErro) {
-      document.getElementById(ID_CAMPO[primeiroComErro])?.focus()
-      return
-    }
+    if (focarPrimeiroErro(novosErros, ID_CAMPO)) return
 
     emAndamento.current = true
     setEnviando(true)
@@ -75,7 +58,7 @@ export default function AbaAbastecimentos({ veiculo, onVeiculoAlterado }) {
         kmNoAbastecimento: Number(form.kmNoAbastecimento),
         posto: form.posto.trim() || undefined, // opcional: vazio nem vai no corpo
       })
-      setForm(FORM_VAZIO)
+      reiniciar()
       setSucesso('Abastecimento registrado.')
       recarregar()
       onVeiculoAlterado() // a quilometragem do veículo pode ter mudado

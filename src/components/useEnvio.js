@@ -36,5 +36,8 @@ export default function useEnvio(aberto, onFechar) {
     if (!emAndamento.current) onFechar()
   }
 
-  return { enviando, erro, enviar, fechar }
+  // Os modais chamam ao editar um campo: o erro da API deixa de valer assim que a pessoa corrige algo.
+  const limparErro = () => setErro(null)
+
+  return { enviando, erro, enviar, fechar, limparErro }
 }

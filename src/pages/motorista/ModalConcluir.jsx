@@ -9,7 +9,7 @@ import validarKmFinal from './validarKmFinal.js'
 // Modal de conclusão: pede o km final. Não usa ModalConfirmar porque precisa de um campo próprio;
 // o envio (Enviando…, erro dentro do modal, anti-duplo-clique) vem do useEnvio.
 export default function ModalConcluir({ aberto, viagem, onConcluido, onFechar }) {
-  const { enviando, erro, enviar, fechar } = useEnvio(aberto, onFechar)
+  const { enviando, erro, enviar, fechar, limparErro } = useEnvio(aberto, onFechar)
   const [kmFinal, setKmFinal] = useState('')
   const [erroCampo, setErroCampo] = useState(null)
   const [abertoAntes, setAbertoAntes] = useState(aberto)
@@ -61,6 +61,7 @@ export default function ModalConcluir({ aberto, viagem, onConcluido, onFechar })
             onChange={(e) => {
               setKmFinal(e.target.value)
               setErroCampo(null)
+              limparErro()
             }}
             error={erroCampo}
             hint={`Informe o que o hodômetro marca agora. Km inicial: ${formatarKm(viagem.kmInicial)}`}

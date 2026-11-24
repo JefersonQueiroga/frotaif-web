@@ -3,6 +3,7 @@ import { abrirManutencao } from '../../../api/manutencoes.js'
 import { listarViagens } from '../../../api/viagens.js'
 import AlertaErro from '../../../components/AlertaErro.jsx'
 import useEnvio from '../../../components/useEnvio.js'
+import useCamposFormulario, { focarPrimeiroErro } from '../../../hooks/useCamposFormulario.js'
 import { Alert, Button, Input, Modal, Select } from '../../../components/ds/index.js'
 import { formatarDataHora } from '../../../utils/formatar.js'
 import { validarManutencao } from './validarManutencao.js'
@@ -14,15 +15,13 @@ const TIPOS = [
   { value: 'PREVENTIVA', label: 'Preventiva' },
   { value: 'CORRETIVA', label: 'Corretiva' },
 ]
-const ORDEM_CAMPOS = ['tipo', 'dataInicio', 'dataPrevistaFim']
 const ID_CAMPO = { tipo: 'manut-tipo', dataInicio: 'manut-inicio', dataPrevistaFim: 'manut-previsao' }
 
 // Modal "Abrir manutenção". Ao escolher as datas, mostra uma PRÉVIA das viagens aprovadas deste veículo
 // que serão canceladas. É só uma prévia para o gestor decidir: quem cancela de verdade é o backend.
 export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFechar }) {
-  const { enviando, erro, enviar, fechar } = useEnvio(aberto, onFechar)
-  const [form, setForm] = useState(FORM_VAZIO)
-  const [erros, setErros] = useState({})
+  const { enviando, erro, enviar, fechar, limparErro } = useEnvio(aberto, onFechar)
+  const { form, erros, setErros, alterar, reiniciar } = useCamposFormulario(FORM_VAZIO, limparErro)
   const [abertoAntes, setAbertoAntes] = useState(aberto)
   // Resultado da prévia, com a "chave" (datas + tentativa) da consulta que o gerou.
   const [previa, setPrevia] = useState({ chave: null, viagens: [], erro: null })
@@ -32,8 +31,7 @@ export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFech
   if (aberto !== abertoAntes) {
     setAbertoAntes(aberto)
     if (aberto) {
-      setForm(FORM_VAZIO)
-      setErros({})
+      reiniciar()
       setPrevia({ chave: null, viagens: [], erro: null })
     }
   }
@@ -68,24 +66,10 @@ export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFech
   const afetadas = previaPronta && !previa.erro ? previa.viagens : []
   const total = afetadas.length
 
-  const alterar = (campo) => (evento) => {
-    const valor = evento.target.value
-    setForm((atual) => ({ ...atual, [campo]: valor }))
-    setErros((atuais) => {
-      if (!atuais[campo]) return atuais
-      const { [campo]: _removido, ...resto } = atuais
-      return resto
-    })
-  }
-
   function confirmar() {
     const novosErros = validarManutencao(form)
     setErros(novosErros)
-    const primeiroComErro = ORDEM_CAMPOS.find((campo) => novosErros[campo])
-    if (primeiroComErro) {
-      document.getElementById(ID_CAMPO[primeiroComErro])?.focus()
-      return
-    }
+    if (focarPrimeiroErro(novosErros, ID_CAMPO)) return
     enviar(async () => {
       await abrirManutencao(veiculo.id, {
         tipo: form.tipo,
@@ -93,7 +77,8 @@ export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFech
         dataInicio: form.dataInicio,
         dataPrevistaFim: form.dataPrevistaFim,
       })
-      onAberta(total)
+      // Só afirmamos a contagem quando a prévia deu certo; senão `null` e a tela usa uma mensagem neutra.
+      onAberta(previaPronta && !previa.erro ? total : null)
     })
   }
 
@@ -110,7 +95,7 @@ export default function ModalAbrirManutencao({ aberto, veiculo, onAberta, onFech
           <Button variant="ghost" onClick={fechar} disabled={enviando}>
             Voltar
           </Button>
-          <Button variant={total > 0 ? 'danger' : 'primary'} onClick={confirmar} disabled={enviando}>
+          <Button variant={total > 0 ? 'danger' : 'primary'} onClick={confirmar} disabled={enviando || consultando}>
             {enviando ? 'Enviando…' : textoBotao}
           </Button>
         </>

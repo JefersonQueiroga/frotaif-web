@@ -71,7 +71,7 @@ function ConteudoAprovar({ viagem, dados, erroCarga, carregando, recarregar, vei
 // Modal de aprovação: o gestor escolhe veículo e motorista. Não usa ModalConfirmar porque precisa de
 // campos próprios; o envio (Enviando…, erro no modal, anti-duplo-clique) vem do useEnvio.
 export default function ModalAprovar({ aberto, viagem, onAprovado, onFechar }) {
-  const { enviando, erro, enviar, fechar } = useEnvio(aberto, onFechar)
+  const { enviando, erro, enviar, fechar, limparErro } = useEnvio(aberto, onFechar)
   const [veiculoId, setVeiculoId] = useState('')
   const [motoristaId, setMotoristaId] = useState('')
   const [erroCampos, setErroCampos] = useState({})
@@ -95,10 +95,12 @@ export default function ModalAprovar({ aberto, viagem, onAprovado, onFechar }) {
 
   function trocarVeiculo(valor) {
     setVeiculoId(valor)
+    limparErro()
     setErroCampos((atual) => ({ ...atual, veiculo: undefined }))
   }
   function trocarMotorista(valor) {
     setMotoristaId(valor)
+    limparErro()
     setErroCampos((atual) => ({ ...atual, motorista: undefined }))
   }
 

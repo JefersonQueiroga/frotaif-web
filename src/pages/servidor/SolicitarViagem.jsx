@@ -4,13 +4,13 @@ import { solicitarViagem } from '../../api/viagens.js'
 import AlertaErro from '../../components/AlertaErro.jsx'
 import { Alert, Button, Input, Textarea } from '../../components/ds/index.js'
 import Pagina from '../../components/layout/Pagina.jsx'
+import useCamposFormulario, { focarPrimeiroErro } from '../../hooks/useCamposFormulario.js'
 import validarSolicitacao from './validarSolicitacao.js'
 import './SolicitarViagem.css'
 
 const FORM_VAZIO = { destino: '', qtdPassageiros: '', finalidade: '', saida: '', retornoPrevisto: '' }
 
-// Ordem em que os campos aparecem na tela: o foco vai para o primeiro com erro nessa ordem.
-const ORDEM_CAMPOS = ['destino', 'qtdPassageiros', 'finalidade', 'saida', 'retornoPrevisto']
+// Ids na ordem em que os campos aparecem na tela: o foco vai para o primeiro com erro nessa ordem.
 const ID_CAMPO = {
   destino: 'nova-destino',
   qtdPassageiros: 'nova-passageiros',
@@ -21,24 +21,12 @@ const ID_CAMPO = {
 
 export default function SolicitarViagem() {
   const navigate = useNavigate()
-  const [form, setForm] = useState(FORM_VAZIO)
-  const [erros, setErros] = useState({})
   const [erroApi, setErroApi] = useState(null)
+  // Digitar apaga o erro daquele campo e o erro da API (que deixa de valer quando a pessoa corrige algo).
+  const { form, erros, setErros, alterar } = useCamposFormulario(FORM_VAZIO, () => setErroApi(null))
   const [enviando, setEnviando] = useState(false)
   // O ref bloqueia o segundo clique mesmo antes de o React redesenhar o botão como desabilitado.
   const emAndamento = useRef(false)
-
-  // Digitar num campo atualiza o valor e apaga só o erro desse campo.
-  const alterar = (campo) => (evento) => {
-    const valor = evento.target.value
-    setErroApi(null) // o erro da API também some assim que a pessoa corrige algo
-    setForm((atual) => ({ ...atual, [campo]: valor }))
-    setErros((atuais) => {
-      if (!atuais[campo]) return atuais
-      const { [campo]: _removido, ...resto } = atuais
-      return resto
-    })
-  }
 
   async function enviar(evento) {
     evento?.preventDefault() // "Tentar de novo" chama sem evento
@@ -47,11 +35,7 @@ export default function SolicitarViagem() {
     const novosErros = validarSolicitacao(form)
     setErros(novosErros)
     setErroApi(null)
-    const primeiroComErro = ORDEM_CAMPOS.find((campo) => novosErros[campo])
-    if (primeiroComErro) {
-      document.getElementById(ID_CAMPO[primeiroComErro])?.focus()
-      return
-    }
+    if (focarPrimeiroErro(novosErros, ID_CAMPO)) return
 
     emAndamento.current = true
     setEnviando(true)

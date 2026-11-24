@@ -12,6 +12,14 @@ import './AbasVeiculo.css'
 // As abertas primeiro; depois as mais recentes.
 const ordenar = (a, b) => Number(b.aberta) - Number(a.aberta) || b.dataInicio.localeCompare(a.dataInicio) || b.id - a.id
 
+// A API não informa quantas viagens cancelou: `canceladas` é a contagem da prévia, ou null se a prévia falhou.
+function mensagemAberta(placa, canceladas) {
+  const base = `Manutenção aberta. ${placa} está Em manutenção`
+  if (canceladas === null) return `${base}. Viagens aprovadas do veículo no período foram canceladas automaticamente.`
+  if (canceladas === 0) return `${base}.`
+  return `${base} e ${canceladas} ${canceladas === 1 ? 'viagem foi cancelada' : 'viagens foram canceladas'}.`
+}
+
 export default function AbaManutencoes({ veiculo, onVeiculoAlterado }) {
   const { dados, carregando, erro, recarregar } = useCarregar(() => listarManutencoes(veiculo.id), [veiculo.id])
   const [modalAbrir, setModalAbrir] = useState(false)
@@ -80,14 +88,7 @@ export default function AbaManutencoes({ veiculo, onVeiculoAlterado }) {
       <ModalAbrirManutencao
         aberto={modalAbrir}
         veiculo={veiculo}
-        onAberta={(canceladas) =>
-          depoisDeAlterar(
-            `Manutenção aberta. ${veiculo.placa} está Em manutenção` +
-              (canceladas > 0
-                ? ` e ${canceladas} ${canceladas === 1 ? 'viagem foi cancelada' : 'viagens foram canceladas'}.`
-                : '.'),
-          )
-        }
+        onAberta={(canceladas) => depoisDeAlterar(mensagemAberta(veiculo.placa, canceladas))}
         onFechar={() => setModalAbrir(false)}
       />
       <ModalEncerrarManutencao

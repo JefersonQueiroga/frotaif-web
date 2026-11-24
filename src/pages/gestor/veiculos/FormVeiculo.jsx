@@ -4,6 +4,7 @@ import { atualizarVeiculo, cadastrarVeiculo } from '../../../api/veiculos.js'
 import AlertaErro from '../../../components/AlertaErro.jsx'
 import { Alert, Badge, Button, Input } from '../../../components/ds/index.js'
 import Pagina from '../../../components/layout/Pagina.jsx'
+import useCamposFormulario, { focarPrimeiroErro } from '../../../hooks/useCamposFormulario.js'
 import { formatarNumero } from '../../../utils/formatar.js'
 import { rotuloTipoVeiculo } from '../../../utils/status.js'
 import validarVeiculo from './validarVeiculo.js'
@@ -25,8 +26,7 @@ const TIPOS = [
   { valor: 'ONIBUS', nota: 'mais de 20 lugares' },
 ]
 
-// Ordem em que os campos aparecem na tela: o foco vai para o primeiro com erro nessa ordem.
-const ORDEM_CAMPOS = ['placa', 'ano', 'marca', 'modelo', 'tipo', 'capacidadePassageiros', 'quilometragemAtual']
+// Ids na ordem em que os campos aparecem na tela: o foco vai para o primeiro com erro nessa ordem.
 const ID_CAMPO = {
   placa: 'veiculo-placa',
   ano: 'veiculo-ano',
@@ -52,26 +52,17 @@ const formDoVeiculo = (v) => ({
 export default function FormVeiculo({ veiculo }) {
   const navigate = useNavigate()
   const novo = !veiculo
-  const [form, setForm] = useState(() => (veiculo ? formDoVeiculo(veiculo) : FORM_VAZIO))
-  const [erros, setErros] = useState({})
   const [erroApi, setErroApi] = useState(null)
+  const { form, erros, setErros, definir, alterar, reiniciar } = useCamposFormulario(
+    veiculo ? formDoVeiculo(veiculo) : FORM_VAZIO,
+    () => setErroApi(null), // o erro da API também some assim que a pessoa corrige algo
+  )
   const [enviando, setEnviando] = useState(false)
   // Texto do veículo recém-cadastrado: quando existe, a tela mostra o sucesso no lugar do formulário.
   const [cadastrado, setCadastrado] = useState(null)
   // O ref bloqueia o segundo clique mesmo antes de o React redesenhar o botão como desabilitado.
   const emAndamento = useRef(false)
 
-  // Digitar num campo atualiza o valor e apaga só o erro desse campo.
-  const definir = (campo, valor) => {
-    setErroApi(null) // o erro da API também some assim que a pessoa corrige algo
-    setForm((atual) => ({ ...atual, [campo]: valor }))
-    setErros((atuais) => {
-      if (!atuais[campo]) return atuais
-      const { [campo]: _removido, ...resto } = atuais
-      return resto
-    })
-  }
-  const alterar = (campo) => (evento) => definir(campo, evento.target.value)
   // A placa é sempre maiúscula e sem símbolos: quem digita "abc-1d23" fica com "ABC1D23".
   const alterarPlaca = (evento) => definir('placa', evento.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7))
 
@@ -82,11 +73,7 @@ export default function FormVeiculo({ veiculo }) {
     const novosErros = validarVeiculo(form, { novo, anoAtual: new Date().getFullYear() })
     setErros(novosErros)
     setErroApi(null)
-    const primeiroComErro = ORDEM_CAMPOS.find((campo) => novosErros[campo])
-    if (primeiroComErro) {
-      document.getElementById(ID_CAMPO[primeiroComErro])?.focus()
-      return
-    }
+    if (focarPrimeiroErro(novosErros, ID_CAMPO)) return
 
     emAndamento.current = true
     setEnviando(true)
@@ -118,8 +105,7 @@ export default function FormVeiculo({ veiculo }) {
   }
 
   function cadastrarOutro() {
-    setForm(FORM_VAZIO)
-    setErros({})
+    reiniciar(FORM_VAZIO)
     setErroApi(null)
     setCadastrado(null)
   }
