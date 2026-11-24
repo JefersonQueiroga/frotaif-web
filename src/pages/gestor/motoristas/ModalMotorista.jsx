@@ -4,7 +4,7 @@ import AlertaErro from '../../../components/AlertaErro.jsx'
 import useEnvio from '../../../components/useEnvio.js'
 import useCamposFormulario, { focarPrimeiroErro } from '../../../hooks/useCamposFormulario.js'
 import { Alert, Button, Input, Modal, Select } from '../../../components/ds/index.js'
-import { formatarCpf } from '../../../utils/formatar.js'
+import { mascararCpf } from '../../../utils/formatar.js'
 import { somenteDigitos } from '../../../utils/validar.js'
 import { validarMotorista } from './validarMotorista.js'
 import './ModalMotorista.css'
@@ -17,15 +17,6 @@ const ID_CAMPO = {
   registroCnh: 'motorista-registro',
   categoriaCnh: 'motorista-categoria',
   validadeCnh: 'motorista-validade',
-}
-
-// Aplica a máscara 000.000.000-00 enquanto a pessoa digita (a API recebe só os dígitos).
-function mascararCpf(texto) {
-  const d = somenteDigitos(texto).slice(0, 11)
-  if (d.length > 9) return formatarCpf(d)
-  if (d.length > 6) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
-  if (d.length > 3) return `${d.slice(0, 3)}.${d.slice(3)}`
-  return d
 }
 
 function formDe(motorista) {

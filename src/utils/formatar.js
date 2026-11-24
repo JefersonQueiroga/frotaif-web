@@ -38,6 +38,16 @@ export function formatarCpf(digitos) {
   return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
 }
 
+// Máscara aplicada enquanto a pessoa digita: 390 -> 390.5 -> ... -> 390.533.447-05.
+// Diferente de formatarCpf (que só formata CPF completo), aceita número parcial e ignora o que passa de 11 dígitos.
+export function mascararCpf(texto) {
+  const d = String(texto ?? '').replace(/\D/g, '').slice(0, 11)
+  if (d.length > 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
+  if (d.length > 6) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
+  if (d.length > 3) return `${d.slice(0, 3)}.${d.slice(3)}`
+  return d
+}
+
 // Por que não usar `toISOString()`? Ele converte para UTC: às 22h30 em Brasília já seria
 // "amanhã". getFullYear/getMonth/getDate usam o relógio local, que é o que o usuário vê.
 export function hojeISO(agora = new Date()) {

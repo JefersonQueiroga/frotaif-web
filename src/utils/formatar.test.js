@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import {
   formatarData, formatarDataHora, formatarNumero, formatarMoeda, formatarKm,
-  formatarLitros, formatarCpf, hojeISO, diasEntre, lerDecimal,
+  formatarLitros, formatarCpf, mascararCpf, hojeISO, diasEntre, lerDecimal,
 } from './formatar'
 
 describe('datas', () => {
@@ -39,5 +39,26 @@ describe('números', () => {
     expect(lerDecimal('35.5')).toBe(35.5)
     expect(lerDecimal('')).toBeNull()
     expect(lerDecimal('abc')).toBeNull()
+  })
+})
+
+describe('mascararCpf', () => {
+  test('aplica a máscara a cada dígito digitado', () => {
+    expect(mascararCpf('')).toBe('')
+    expect(mascararCpf('390')).toBe('390')
+    expect(mascararCpf('3905')).toBe('390.5')
+    expect(mascararCpf('3905334')).toBe('390.533.4')
+    expect(mascararCpf('3905334470')).toBe('390.533.447-0')
+    expect(mascararCpf('39053344705')).toBe('390.533.447-05')
+  })
+  test('CPF já mascarado continua igual', () => {
+    expect(mascararCpf('390.533.447-05')).toBe('390.533.447-05')
+  })
+  test('ignora dígitos além de 11', () => {
+    expect(mascararCpf('3905334470599')).toBe('390.533.447-05')
+  })
+  test('apagar pontuação no fim não deixa sobras', () => {
+    expect(mascararCpf('390.')).toBe('390')
+    expect(mascararCpf('390.533.447-')).toBe('390.533.447')
   })
 })
