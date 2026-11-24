@@ -1,0 +1,59 @@
+/* Estilos compartilhados por Input, Select e Textarea. */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-sans);
+}
+
+.campo__rotulo {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-strong);
+}
+
+.campo__controle {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  background: var(--white);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.campo__controle::placeholder {
+  color: var(--text-muted);
+}
+
+.campo__controle:focus-visible {
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.campo__controle:disabled {
+  background: var(--gray-100);
+  cursor: not-allowed;
+}
+
+/* Erro: borda de 2px (o padding perde 1px para o campo não "pular" de tamanho). */
+.campo__controle--erro {
+  border: 2px solid var(--red-500);
+  padding: 0 11px;
+}
+.campo__controle--erro:focus-visible {
+  border-color: var(--red-500);
+  box-shadow: 0 0 0 3px var(--red-100);
+}
+
+.campo__mensagem {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.campo__mensagem--erro {
+  color: var(--red-600);
+}

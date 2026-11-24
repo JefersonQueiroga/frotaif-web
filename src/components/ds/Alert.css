@@ -1,0 +1,75 @@
+.alerta {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: var(--alerta-fundo);
+  border-left: 4px solid var(--alerta-barra);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  color: var(--text-body);
+}
+
+.alerta--info {
+  --alerta-fundo: var(--blue-50);
+  --alerta-barra: var(--blue-500);
+  --alerta-texto: var(--blue-600);
+}
+.alerta--success {
+  --alerta-fundo: var(--green-50);
+  --alerta-barra: var(--green-500);
+  --alerta-texto: var(--green-700);
+}
+.alerta--warning {
+  --alerta-fundo: var(--amber-50);
+  --alerta-barra: var(--amber-500);
+  --alerta-texto: #8a6100;
+}
+.alerta--danger {
+  --alerta-fundo: var(--red-50);
+  --alerta-barra: var(--red-500);
+  --alerta-texto: var(--red-600);
+}
+
+.alerta__icone {
+  flex: none;
+  margin-top: 1px;
+  color: var(--alerta-texto);
+}
+
+.alerta__corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.alerta__titulo {
+  margin-bottom: 2px;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  color: var(--alerta-texto);
+}
+
+.alerta__texto {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+/* Área de toque de 44px ao redor do X (margem negativa para não aumentar o alerta). */
+.alerta__fechar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -12px -12px -12px 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.alerta__fechar:hover {
+  color: var(--text-strong);
+}

@@ -1,0 +1,10 @@
+.textarea__controle {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: var(--lh-normal);
+  resize: vertical;
+}
+.textarea__controle.campo__controle--erro {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}

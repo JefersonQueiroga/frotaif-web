@@ -1,0 +1,25 @@
+.select__caixa {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select__controle {
+  appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.select__controle:disabled {
+  cursor: not-allowed;
+}
+.select__controle.campo__controle--erro {
+  padding-right: 35px;
+}
+
+/* A seta é decorativa e não pode capturar o clique. */
+.select__seta {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: var(--text-muted);
+}
