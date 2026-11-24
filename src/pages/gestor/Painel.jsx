@@ -10,7 +10,7 @@ import StatusBadge from '../../components/StatusBadge.jsx'
 import Vazio from '../../components/Vazio.jsx'
 import useCarregar from '../../hooks/useCarregar.js'
 import { diasEntre, formatarData, formatarDataHora, hojeISO } from '../../utils/formatar.js'
-import { cnhVencida, situacaoMotorista } from '../../utils/status.js'
+import { cnhVencida, rotuloVencimentoCnh, situacaoMotorista } from '../../utils/status.js'
 import './Painel.css'
 
 const OPCOES_DIAS = [15, 30, 60, 90].map((n) => ({ value: String(n), label: `${n} dias` }))
@@ -47,8 +47,12 @@ function PrazoSaida({ saida, hoje }) {
   return <Badge tone={dias <= DIAS_PRAZO_CURTO ? 'amber' : 'neutral'}>{texto}</Badge>
 }
 
-function ItemMotorista({ motorista, hoje }) {
-  const { rotulo, tom } = situacaoMotorista(motorista, hoje)
+// `comDias`: na lista "vencendo" a janela pode ser 60 ou 90 dias, então o rótulo sempre mostra os dias
+// (situacaoMotorista diria "CNH em dia" além de 30 dias, o que contradiz a lista).
+function ItemMotorista({ motorista, hoje, comDias }) {
+  const { rotulo, tom } = comDias
+    ? rotuloVencimentoCnh(motorista.validadeCnh, hoje)
+    : situacaoMotorista(motorista, hoje)
   return (
     <li className="painel__motorista">
       <div className="painel__motorista-dados">
@@ -62,7 +66,7 @@ function ItemMotorista({ motorista, hoje }) {
   )
 }
 
-function ListaMotoristas({ estado, motoristas, hoje, vazio }) {
+function BlocoMotoristas({ estado, motoristas, hoje, vazio, comDias = false }) {
   return (
     <div className="painel__card">
       <Bloco estados={[estado]}>
@@ -71,7 +75,7 @@ function ListaMotoristas({ estado, motoristas, hoje, vazio }) {
         ) : (
           <ul className="painel__lista">
             {motoristas.map((m) => (
-              <ItemMotorista key={m.id} motorista={m} hoje={hoje} />
+              <ItemMotorista key={m.id} motorista={m} hoje={hoje} comDias={comDias} />
             ))}
           </ul>
         )}
@@ -104,7 +108,7 @@ export default function Painel() {
     { titulo: 'Destino', render: (v) => <strong>{v.destino}</strong> },
     { titulo: 'Solicitante', render: (v) => v.solicitante.nome },
     { titulo: 'Saída', className: 'painel__data', render: (v) => formatarDataHora(v.saida) },
-    { titulo: 'Pass.', className: 'painel__numero', render: (v) => v.qtdPassageiros },
+    { titulo: 'Pass.', className: 'tabela__numero', render: (v) => v.qtdPassageiros },
     { titulo: 'Prazo', render: (v) => <PrazoSaida saida={v.saida} hoje={hoje} /> },
     {
       titulo: 'Ações',
@@ -165,15 +169,16 @@ export default function Painel() {
               className="painel__janela"
             />
           </div>
-          <ListaMotoristas
+          <BlocoMotoristas
             estado={vencendo}
             motoristas={vencendo.dados ?? []}
             hoje={hoje}
+            comDias
             vazio="Nenhuma CNH vence nessa janela."
           />
 
           <h3 className="painel__subtitulo">Já vencidas</h3>
-          <ListaMotoristas
+          <BlocoMotoristas
             estado={motoristas}
             motoristas={vencidas}
             hoje={hoje}

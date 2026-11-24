@@ -45,6 +45,14 @@ export const cnhVencida = (motorista, hoje) =>
 // "Vence em N dias" só aparece nos próximos 30 dias; antes disso a CNH está "em dia".
 const DIAS_AVISO_CNH = 30
 
+// Para listas que já filtram por "vence nos próximos N dias" (N pode ser 60 ou 90): mostra sempre os dias,
+// em vez do "CNH em dia" que situacaoMotorista usa além de 30 dias.
+export function rotuloVencimentoCnh(validadeCnh, hoje) {
+  const dias = diasEntre(hoje, validadeCnh)
+  if (dias === 0) return { rotulo: 'Vence hoje', tom: 'amber' }
+  return { rotulo: `Vence em ${dias} ${dias === 1 ? 'dia' : 'dias'}`, tom: 'amber' }
+}
+
 export function situacaoMotorista(motorista, hoje) {
   if (!motorista.ativo) return { rotulo: 'Inativo', tom: 'neutral' }
   const dias = diasEntre(hoje, motorista.validadeCnh)

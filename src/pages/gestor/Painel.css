@@ -110,11 +110,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.painel__numero {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 .painel__analisar {
   display: inline-flex;
   align-items: center;

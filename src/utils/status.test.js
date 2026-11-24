@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import {
   infoStatusViagem, infoStatusVeiculo, infoTipoManutencao,
-  rotuloTipoVeiculo, situacaoMotorista, cnhVencida,
+  rotuloTipoVeiculo, situacaoMotorista, cnhVencida, rotuloVencimentoCnh,
 } from './status'
 
 describe('rótulos e tons', () => {
@@ -31,5 +31,15 @@ describe('situação do motorista', () => {
   test('cnhVencida ignora inativos', () => {
     expect(cnhVencida(m('2026-10-24'), hoje)).toBe(true)
     expect(cnhVencida(m('2026-10-24', false), hoje)).toBe(false)
+  })
+})
+
+describe('rotuloVencimentoCnh', () => {
+  const hoje = '2026-11-23'
+  test('sempre mostra os dias, mesmo além de 30', () => {
+    expect(rotuloVencimentoCnh('2026-11-23', hoje)).toEqual({ rotulo: 'Vence hoje', tom: 'amber' })
+    expect(rotuloVencimentoCnh('2026-11-24', hoje)).toEqual({ rotulo: 'Vence em 1 dia', tom: 'amber' })
+    expect(rotuloVencimentoCnh('2026-12-13', hoje)).toEqual({ rotulo: 'Vence em 20 dias', tom: 'amber' })
+    expect(rotuloVencimentoCnh('2027-01-22', hoje)).toEqual({ rotulo: 'Vence em 60 dias', tom: 'amber' })
   })
 })
