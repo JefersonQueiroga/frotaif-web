@@ -1,4 +1,4 @@
-.detalhe-servidor__voltar {
+.carga-viagem__voltar {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -10,6 +10,6 @@
   text-decoration: none;
 }
 
-.detalhe-servidor__voltar:hover {
+.carga-viagem__voltar:hover {
   text-decoration: underline;
 }

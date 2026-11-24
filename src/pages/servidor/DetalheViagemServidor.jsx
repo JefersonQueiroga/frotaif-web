@@ -1,23 +1,16 @@
 import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
-import { ApiError } from '../../api/cliente.js'
+import { useParams } from 'react-router-dom'
 import { buscarViagem, cancelarViagem } from '../../api/viagens.js'
 import AlertaErro from '../../components/AlertaErro.jsx'
-import { Alert, Button, Skeleton } from '../../components/ds/index.js'
+import { Alert, Button } from '../../components/ds/index.js'
 import Pagina from '../../components/layout/Pagina.jsx'
 import ModalMotivo from '../../components/ModalMotivo.jsx'
-import Vazio from '../../components/Vazio.jsx'
 import DetalheViagem from '../../components/viagens/DetalheViagem.jsx'
+import CargaViagem, { LinkVoltar } from '../../components/viagens/CargaViagem.jsx'
+import { viagemIndisponivel } from '../../components/viagens/viagemIndisponivel.js'
 import useCarregar from '../../hooks/useCarregar.js'
-import './DetalheViagemServidor.css'
 
-const VOLTAR = (
-  <Link className="detalhe-servidor__voltar" to="/servidor/viagens">
-    <ArrowLeft size={18} aria-hidden="true" />
-    Voltar para as viagens
-  </Link>
-)
+const VOLTAR = <LinkVoltar para="/servidor/viagens" />
 
 export default function DetalheViagemServidor() {
   const { id } = useParams()
@@ -32,28 +25,8 @@ export default function DetalheViagemServidor() {
     recarregar()
   }
 
-  if (erro instanceof ApiError && erro.status === 404) {
-    return (
-      <Pagina titulo="Viagem não encontrada">
-        <Vazio mensagem="Viagem não encontrada." acao={VOLTAR} />
-      </Pagina>
-    )
-  }
-  if (erro && !viagem) {
-    return (
-      <Pagina titulo="Detalhe da viagem">
-        {VOLTAR}
-        <AlertaErro erro={erro} onTentarDeNovo={recarregar} />
-      </Pagina>
-    )
-  }
-  if (!viagem) {
-    return (
-      <Pagina titulo="Detalhe da viagem">
-        {VOLTAR}
-        {carregando && <Skeleton linhas={4} />}
-      </Pagina>
-    )
+  if (viagemIndisponivel(viagem, erro)) {
+    return <CargaViagem erro={erro} carregando={carregando} recarregar={recarregar} voltarPara="/servidor/viagens" />
   }
 
   const podeCancelar = viagem.status === 'SOLICITADA' || viagem.status === 'APROVADA'

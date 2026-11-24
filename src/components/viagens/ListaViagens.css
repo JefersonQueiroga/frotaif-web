@@ -1,20 +1,26 @@
-.viagens-servidor__id {
+.lista-viagens__id {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--text-muted);
 }
 
-.viagens-servidor__data {
+.lista-viagens__data {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
-.viagens-servidor__numero {
+.lista-viagens__numero {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-.viagens-servidor__ver {
+.lista-viagens__placa {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.lista-viagens__ver {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -28,6 +34,6 @@
   white-space: nowrap;
 }
 
-.viagens-servidor__ver:hover {
+.lista-viagens__ver:hover {
   background: var(--tint-hover);
 }
