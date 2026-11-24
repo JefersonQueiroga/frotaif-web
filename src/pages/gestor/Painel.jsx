@@ -141,7 +141,7 @@ export default function Painel() {
       <section className="painel__secao">
         <div className="painel__titulo-secao">
           <h2>Pedidos aguardando aprovação</h2>
-          <Link to="/gestor/viagens">Ver todas as viagens</Link>
+          <Link className="painel__link" to="/gestor/viagens">Ver todas as viagens</Link>
         </div>
         <Bloco estados={[pendentes]} linhas={3}>
           {pendentes.dados?.length === 0 ? (
@@ -179,7 +179,7 @@ export default function Painel() {
             hoje={hoje}
             vazio="Nenhum motorista com CNH vencida."
           />
-          <Link to="/gestor/motoristas">Abrir motoristas</Link>
+          <Link className="painel__link" to="/gestor/motoristas">Abrir motoristas</Link>
         </section>
 
         <section className="painel__secao">

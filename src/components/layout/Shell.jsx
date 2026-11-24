@@ -43,7 +43,7 @@ export default function Shell() {
               <span className="shell__nome-usuario">{usuario.nome}</span>
               <span className="shell__papel">{ROTULO_PAPEL[usuario.papel] ?? usuario.papel}</span>
             </span>
-            <Button variant="secondary" size="sm" onClick={sair}>
+            <Button variant="secondary" size="md" onClick={sair}>
               Sair
             </Button>
           </div>

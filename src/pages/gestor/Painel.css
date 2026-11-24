@@ -230,3 +230,10 @@
   font-family: var(--font-mono);
   color: var(--text-muted);
 }
+
+/* Link de ação do painel com área de toque de 44px (mesmo mínimo dos botões). */
+.painel__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
