@@ -7,6 +7,8 @@ import Componentes from './pages/Componentes.jsx'
 import EmConstrucao from './pages/EmConstrucao.jsx'
 import Login from './pages/Login.jsx'
 import NaoEncontrada from './pages/NaoEncontrada.jsx'
+import DetalheViagemMotorista from './pages/motorista/DetalheViagemMotorista.jsx'
+import ViagensMotorista from './pages/motorista/ViagensMotorista.jsx'
 import DetalheViagemGestor from './pages/gestor/DetalheViagemGestor.jsx'
 import ViagensGestor from './pages/gestor/ViagensGestor.jsx'
 import DetalheViagemServidor from './pages/servidor/DetalheViagemServidor.jsx'
@@ -39,8 +41,8 @@ function App() {
           </Route>
 
           <Route element={<RotaProtegida papel="MOTORISTA" />}>
-            <Route path="/motorista/viagens" element={<EmConstrucao titulo="Viagens" />} />
-            <Route path="/motorista/viagens/:id" element={<EmConstrucao titulo="Detalhe da viagem" />} />
+            <Route path="/motorista/viagens" element={<ViagensMotorista />} />
+            <Route path="/motorista/viagens/:id" element={<DetalheViagemMotorista />} />
           </Route>
 
           <Route element={<RotaProtegida papel="GESTOR" />}>
