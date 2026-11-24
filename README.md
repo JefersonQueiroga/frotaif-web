@@ -7,7 +7,7 @@ Três papéis usam o sistema: **Servidor** (solicita viagens), **Motorista** (in
 ## Pré-requisitos
 
 - Node 24
-- O backend FrotaIF rodando em `http://localhost:8080`. Ele precisa de **JDK 21**: aponte o `JAVA_HOME` para um JDK 21 e, na pasta do backend, rode `mvn spring-boot:run`. O banco H2 é recriado a cada início, com os dados de `data.sql`.
+- O backend FrotaIF rodando em `http://localhost:8080`. Ele fica na pasta irmã deste projeto, `frotaif` (`../frotaif`): entre nela e rode `mvn spring-boot:run`. Precisa de **JDK 21 ou mais novo** (o `JAVA_HOME` precisa apontar para ele). O banco H2 é recriado a cada início, com os dados de `data.sql`.
 
 ## Como rodar
 
@@ -15,6 +15,8 @@ Três papéis usam o sistema: **Servidor** (solicita viagens), **Motorista** (in
 npm install
 npm run dev      # http://localhost:5173
 ```
+
+No desenvolvimento, o `StrictMode` do React executa cada efeito duas vezes: por isso cada GET aparece duas vezes na aba Network do navegador. No build de produção isso não acontece.
 
 Outros comandos:
 
